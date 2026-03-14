@@ -1,0 +1,114 @@
+import { useState } from "react"
+import type { RiotAccount, RiotRegion } from "../types"
+import { Button } from "@/components/ui/button"
+import { TextInput } from "@/components/ui/inputs/text"
+import { cn } from "@/lib/utils"
+import { getPlayer } from "../services/player.service"
+import { parseRiotId, REGIONS } from "../utils/riot-id.utils"
+import { MatchHistory } from "./MatchHistory"
+
+export function PlayerSearch() {
+  const [riotIdInput, setRiotIdInput] = useState("")
+  const [region, setRegion] = useState<RiotRegion>("americas")
+  const [player, setPlayer] = useState<RiotAccount | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+
+  async function handleSearch(e: React.FormEvent) {
+    e.preventDefault()
+    setError(null)
+    setPlayer(null)
+
+    const { gameName, tagLine } = parseRiotId(riotIdInput)
+    if (!gameName.trim()) {
+      setError("Digite o Riot ID (ex: Nome#BR1)")
+      return
+    }
+    if (!tagLine.trim()) {
+      setError("Use o formato Nome#Tag (ex: Player#BR1)")
+      return
+    }
+
+    setLoading(true)
+    try {
+      const data = await getPlayer(gameName, tagLine, region)
+      setPlayer(data)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erro ao buscar jogador")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="flex max-w-md flex-col gap-4">
+      <h2 className="text-base font-medium text-foreground">
+        Buscar jogador (LoL)
+      </h2>
+      <p className="text-sm text-muted-foreground">
+        Use o Riot ID no formato <strong>Nome#Tag</strong> (ex: Faker#KR1).
+      </p>
+
+      <form onSubmit={handleSearch} className="flex flex-col gap-3">
+        <TextInput
+          type="text"
+          value={riotIdInput}
+          onChange={(e) => setRiotIdInput(e.target.value)}
+          placeholder="Nome#Tag"
+          disabled={loading}
+          autoComplete="off"
+        />
+        <select
+          value={region}
+          onChange={(e) => setRegion(e.target.value as RiotRegion)}
+          disabled={loading}
+          className={cn(
+            "h-9 w-full rounded-lg border border-input bg-background px-3 py-1 text-sm",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            "disabled:opacity-50"
+          )}
+        >
+          {REGIONS.map((r) => (
+            <option key={r.value} value={r.value}>
+              {r.label}
+            </option>
+          ))}
+        </select>
+        <Button type="submit" disabled={loading}>
+          {loading ? "Buscando…" : "Buscar"}
+        </Button>
+      </form>
+
+      {error && (
+        <div
+          className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2 text-sm text-destructive"
+          role="alert"
+        >
+          {error}
+        </div>
+      )}
+
+      {player ? (
+        <>
+          <div className="rounded-lg border border-border bg-muted/30 p-4 text-sm">
+            <p className="font-medium text-foreground">
+              {player.gameName}#{player.tagLine}
+            </p>
+            <p className="mt-1 font-mono text-xs text-muted-foreground break-all">
+              PUUID: {player.puuid}
+            </p>
+          </div>
+          <MatchHistory puuid={player.puuid} region={region} />
+        </>
+      ) : (
+        <div
+          className="rounded-lg border border-dashed border-border bg-muted/20 p-6 text-center text-sm text-muted-foreground"
+          aria-hidden="true"
+        >
+          Digite um Riot ID acima e clique em Buscar para ver o histórico de
+          partidas.
+        </div>
+      )}
+    </div>
+  )
+}
