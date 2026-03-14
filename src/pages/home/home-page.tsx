@@ -1,7 +1,9 @@
 import { usePlayerSearch } from "@/contexts/player-search"
-import { MatchHistory } from "./components/MatchHistory"
+import { useTranslation } from "@/contexts/i18n"
+import { MatchHistory } from "./components/match-history"
 
 export function HomePage() {
+  const { t } = useTranslation()
   const { player, region } = usePlayerSearch()
 
   return (
@@ -24,7 +26,7 @@ export function HomePage() {
             className="rounded-lg border border-dashed border-border bg-muted/20 p-6 text-center text-sm text-muted-foreground"
             aria-hidden="true"
           >
-            Use a pesquisa no header para buscar um jogador pelo Riot ID.
+            {t("home.empty")}
           </div>
         )}
       </div>

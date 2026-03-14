@@ -33,7 +33,7 @@ export function isRiotProxy(): boolean {
 }
 
 /**
- * Faz GET na API Riot. Usado pelos services das páginas (home, partidas).
+ * GET request to Riot API. Used by page services (home, matches).
  * Path já deve vir com barras (ex: /riot/account/v1/accounts/...).
  */
 export async function riotFetch<T>(

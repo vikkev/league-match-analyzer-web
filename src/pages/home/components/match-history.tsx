@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
+import { useTranslation } from "@/contexts/i18n"
 import type { RiotMatch } from "../types"
 import { getMatchHistory } from "../services/match.service"
-import { MatchHistoryItem } from "./MatchHistoryItem"
-import { MatchHistoryLoading } from "./MatchHistoryLoading"
-import { MatchHistoryError } from "./MatchHistoryError"
-import { MatchHistoryEmpty } from "./MatchHistoryEmpty"
+import { MatchHistoryItem } from "./match-history-item"
+import { MatchHistoryLoading } from "./match-history-loading"
+import { MatchHistoryError } from "./match-history-error"
+import { MatchHistoryEmpty } from "./match-history-empty"
 
 interface MatchHistoryProps {
   puuid: string
@@ -12,6 +13,7 @@ interface MatchHistoryProps {
 }
 
 export function MatchHistory({ puuid, region }: MatchHistoryProps) {
+  const { t } = useTranslation()
   const [matches, setMatches] = useState<RiotMatch[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -24,7 +26,7 @@ export function MatchHistory({ puuid, region }: MatchHistoryProps) {
       })
       .catch((err) => {
         if (!cancelled)
-          setError(err instanceof Error ? err.message : "Erro ao carregar partidas")
+          setError(err instanceof Error ? err.message : t("matchHistory.error"))
       })
       .finally(() => {
         if (!cancelled) setLoading(false)
@@ -34,7 +36,7 @@ export function MatchHistory({ puuid, region }: MatchHistoryProps) {
       setLoading(true)
       setError(null)
     }
-  }, [puuid, region])
+  }, [puuid, region, t])
 
   if (loading) return <MatchHistoryLoading />
   if (error) return <MatchHistoryError message={error} />
@@ -42,7 +44,7 @@ export function MatchHistory({ puuid, region }: MatchHistoryProps) {
 
   return (
     <div className="flex flex-col gap-2">
-      <h3 className="font-medium text-foreground">Histórico de partidas</h3>
+      <h3 className="font-medium text-foreground">{t("matchHistory.title")}</h3>
       <ul className="flex flex-col gap-2">
         {matches.map((match) => (
           <MatchHistoryItem

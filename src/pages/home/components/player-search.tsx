@@ -1,13 +1,15 @@
 import { useState } from "react"
 import type { RiotAccount, RiotRegion } from "../types"
 import { Button } from "@/components/ui/button"
-import { TextInput } from "@/components/ui/inputs/text"
+import { TextInput } from "@/components/ui/inputs/text-input"
 import { cn } from "@/lib/utils"
+import { useTranslation } from "@/contexts/i18n"
 import { getPlayer } from "../services/player.service"
 import { parseRiotId, REGIONS } from "../utils/riot-id.utils"
-import { MatchHistory } from "./MatchHistory"
+import { MatchHistory } from "./match-history"
 
 export function PlayerSearch() {
+  const { t } = useTranslation()
   const [riotIdInput, setRiotIdInput] = useState("")
   const [region, setRegion] = useState<RiotRegion>("americas")
   const [player, setPlayer] = useState<RiotAccount | null>(null)
@@ -70,7 +72,7 @@ export function PlayerSearch() {
         >
           {REGIONS.map((r) => (
             <option key={r.value} value={r.value}>
-              {r.label}
+              {t(r.labelKey)}
             </option>
           ))}
         </select>
@@ -106,7 +108,7 @@ export function PlayerSearch() {
           aria-hidden="true"
         >
           Digite um Riot ID acima e clique em Buscar para ver o histórico de
-          partidas.
+          matches.
         </div>
       )}
     </div>

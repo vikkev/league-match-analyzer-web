@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import type { RiotMatch } from "../types"
 import { findPlayerParticipant } from "../utils/match.utils"
+import { useTranslation } from "@/contexts/i18n"
 import { formatDuration, formatGameTime } from "@/lib/format"
 import { cn } from "@/lib/utils"
 
@@ -11,22 +12,23 @@ interface MatchHistoryItemProps {
 }
 
 export function MatchHistoryItem({ match, puuid, region }: MatchHistoryItemProps) {
+  const { t } = useTranslation()
   const player = findPlayerParticipant(match, puuid)
   if (!player) return null
 
   const duration = formatDuration(match.info.gameDuration)
   const timeAgo = formatGameTime(match.info.gameCreation)
-  const matchUrl = `/partidas/${match.metadata.matchId}?region=${region}`
+  const matchUrl = `/matches/${match.metadata.matchId}?region=${region}`
 
   return (
     <li>
       <Link
         to={matchUrl}
         className={cn(
-          "block rounded-lg border p-3 text-sm transition-colors hover:opacity-90",
+          "block rounded-lg border p-3 text-sm transition-colors hover:bg-card-hover",
           player.win
-            ? "border-green-500/30 bg-green-500/5 dark:border-green-400/20 dark:bg-green-400/5"
-            : "border-red-500/30 bg-red-500/5 dark:border-red-400/20 dark:bg-red-400/5"
+            ? "border-victory-border bg-victory-bg"
+            : "border-defeat-border bg-defeat-bg"
         )}
       >
         <div className="flex flex-wrap items-center justify-between gap-2">
@@ -35,11 +37,11 @@ export function MatchHistoryItem({ match, puuid, region }: MatchHistoryItemProps
             className={cn(
               "rounded px-1.5 py-0.5 text-xs font-medium",
               player.win
-                ? "bg-green-500/20 text-green-700 dark:text-green-300"
-                : "bg-red-500/20 text-red-700 dark:text-red-300"
+                ? "bg-victory-bg text-victory"
+                : "bg-defeat-bg text-defeat"
             )}
           >
-            {player.win ? "Vitória" : "Derrota"}
+            {player.win ? t("match.result.victory") : t("match.result.defeat")}
           </span>
         </div>
         <div className="mt-1 flex flex-wrap gap-x-3 gap-y-0 text-muted-foreground">

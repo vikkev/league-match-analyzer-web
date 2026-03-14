@@ -1,10 +1,10 @@
 import type { RiotRegion } from "../types"
 
-/** Opções de região para o select da home */
-export const REGIONS: { value: RiotRegion; label: string }[] = [
-  { value: "americas", label: "Américas" },
-  { value: "europe", label: "Europa" },
-  { value: "asia", label: "Ásia" },
+/** Region options for the header/home select. Label is via i18n key (region.americas, etc.). */
+export const REGIONS: { value: RiotRegion; labelKey: "region.americas" | "region.europe" | "region.asia" }[] = [
+  { value: "americas", labelKey: "region.americas" },
+  { value: "europe", labelKey: "region.europe" },
+  { value: "asia", labelKey: "region.asia" },
 ]
 
 /**

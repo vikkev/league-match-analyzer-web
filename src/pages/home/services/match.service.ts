@@ -6,7 +6,7 @@ const PATH_MATCH = "/lol/match/v5/matches"
 const DEFAULT_MATCH_COUNT = 10
 
 /**
- * Lista IDs das últimas partidas do jogador.
+ * Lists the player's latest match IDs.
  * Match v5: GET /lol/match/v5/matches/by-puuid/{puuid}/ids
  */
 export async function getMatchIds(
@@ -19,7 +19,7 @@ export async function getMatchIds(
 }
 
 /**
- * Busca o detalhe de uma partida.
+ * Fetches a single match by ID.
  * Match v5: GET /lol/match/v5/matches/{matchId}
  */
 export async function getMatchDetail(
@@ -31,7 +31,7 @@ export async function getMatchDetail(
 }
 
 /**
- * Busca as últimas partidas com detalhes (ids + detalhe de cada uma).
+ * Fetches latest matches with full details (IDs + each match detail).
  */
 export async function getMatchHistory(
   puuid: string,

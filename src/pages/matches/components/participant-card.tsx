@@ -1,4 +1,5 @@
 import type { MatchParticipant } from "../types"
+import { useTranslation } from "@/contexts/i18n"
 import { cn } from "@/lib/utils"
 
 interface ParticipantCardProps {
@@ -6,6 +7,7 @@ interface ParticipantCardProps {
 }
 
 export function ParticipantCard({ participant }: ParticipantCardProps) {
+  const { t } = useTranslation()
   const { championName, win, kills, deaths, assists, totalMinionsKilled, neutralMinionsKilled } =
     participant
   const cs = totalMinionsKilled + neutralMinionsKilled
@@ -15,8 +17,8 @@ export function ParticipantCard({ participant }: ParticipantCardProps) {
       className={cn(
         "flex flex-wrap items-center justify-between gap-2 rounded-lg border px-3 py-2 text-sm",
         win
-          ? "border-green-500/30 bg-green-500/5 dark:border-green-400/20 dark:bg-green-400/5"
-          : "border-red-500/30 bg-red-500/5 dark:border-red-400/20 dark:bg-red-400/5"
+          ? "border-victory-border bg-victory-bg"
+          : "border-defeat-border bg-defeat-bg"
       )}
     >
       <span className="font-medium capitalize">{championName}</span>
@@ -24,11 +26,11 @@ export function ParticipantCard({ participant }: ParticipantCardProps) {
         className={cn(
           "rounded px-1.5 py-0.5 text-xs font-medium",
           win
-            ? "bg-green-500/20 text-green-700 dark:text-green-300"
-            : "bg-red-500/20 text-red-700 dark:text-red-300"
+            ? "bg-victory-bg text-victory"
+            : "bg-defeat-bg text-defeat"
         )}
       >
-        {win ? "Vitória" : "Derrota"}
+        {win ? t("match.result.victory") : t("match.result.defeat")}
       </span>
       <span className="w-full text-muted-foreground">
         {kills}/{deaths}/{assists} KDA

@@ -1,6 +1,6 @@
 import type { RiotMatch } from "../types"
-import { MatchDetailHeader } from "./MatchDetailHeader"
-import { ParticipantCard } from "./ParticipantCard"
+import { MatchDetailHeader } from "./match-detail-header"
+import { ParticipantCard } from "./participant-card"
 
 interface MatchDetailProps {
   match: RiotMatch

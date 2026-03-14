@@ -1,4 +1,4 @@
-/** Participante em uma partida (match-v5) */
+/** Participant in a match (match-v5) */
 export interface MatchParticipant {
   puuid: string
   championName: string
@@ -10,7 +10,7 @@ export interface MatchParticipant {
   neutralMinionsKilled: number
 }
 
-/** Detalhe da partida (match-v5) */
+/** Match detail (match-v5) */
 export interface RiotMatch {
   metadata: { matchId: string }
   info: {

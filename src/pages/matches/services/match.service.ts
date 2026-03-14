@@ -4,7 +4,7 @@ import type { RiotMatch, RiotRegion } from "../types"
 const PATH_MATCH = "/lol/match/v5/matches"
 
 /**
- * Busca o detalhe de uma partida pelo ID.
+ * Fetches match detail by ID.
  * Match v5: GET /lol/match/v5/matches/{matchId}
  */
 export async function getMatchDetail(

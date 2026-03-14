@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react"
 import { useParams, useSearchParams } from "react-router-dom"
+import { useTranslation } from "@/contexts/i18n"
 import type { RiotRegion } from "./types"
 import { getMatchDetail } from "./services/match.service"
-import { MatchDetail } from "./components/MatchDetail"
+import { MatchDetail } from "./components/match-detail"
 
 const DEFAULT_REGION: RiotRegion = "americas"
 
-export function PartidasPage() {
+export function MatchesPage() {
+  const { t } = useTranslation()
   const { id: matchId } = useParams<{ id: string }>()
   const [searchParams] = useSearchParams()
   const region = (searchParams.get("region") as RiotRegion) || DEFAULT_REGION
@@ -17,20 +19,25 @@ export function PartidasPage() {
 
   useEffect(() => {
     if (!matchId) {
-      setLoading(false)
-      setError("ID da partida não informado.")
+      const msg = t("matches.idRequired")
+      queueMicrotask(() => {
+        setLoading(false)
+        setError(msg)
+      })
       return
     }
     let cancelled = false
-    setLoading(true)
-    setError(null)
+    queueMicrotask(() => {
+      setLoading(true)
+      setError(null)
+    })
     getMatchDetail(matchId, region)
       .then((data) => {
         if (!cancelled) setMatch(data)
       })
       .catch((err) => {
         if (!cancelled)
-          setError(err instanceof Error ? err.message : "Erro ao carregar partida")
+          setError(err instanceof Error ? err.message : t("matches.loadError"))
       })
       .finally(() => {
         if (!cancelled) setLoading(false)
@@ -38,12 +45,12 @@ export function PartidasPage() {
     return () => {
       cancelled = true
     }
-  }, [matchId, region])
+  }, [matchId, region, t])
 
   if (loading) {
     return (
       <div className="flex flex-col p-6">
-        <p className="text-sm text-muted-foreground">Carregando partida…</p>
+        <p className="text-sm text-muted-foreground">{t("matches.loading")}</p>
       </div>
     )
   }
@@ -55,7 +62,7 @@ export function PartidasPage() {
           className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2 text-sm text-destructive"
           role="alert"
         >
-          {error ?? "Partida não encontrada."}
+          {error ?? t("matches.notFound")}
         </div>
       </div>
     )

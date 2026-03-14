@@ -1,6 +1,6 @@
 import type { MatchParticipant, RiotMatch } from "../types"
 
-/** Encontra o participante do jogador (por puuid) na partida. */
+/** Finds the player participant (by puuid) in the match. */
 export function findPlayerParticipant(
   match: RiotMatch,
   puuid: string

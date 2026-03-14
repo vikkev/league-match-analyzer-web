@@ -1,18 +1,17 @@
 import { Routes, Route } from "react-router-dom"
-import { AppLayout } from "@/components/AppLayout"
-import { HomePage } from "@/pages/home/HomePage"
-import { PartidasPage } from "@/pages/partidas/PartidasPage"
+import { AppLayout } from "@/components/app-layout"
+import { HomePage } from "@/pages/home/home-page"
+import { MatchesPage } from "@/pages/matches/matches-page"
 
 /**
- * Rotas da aplicação.
- * Home e Partidas ficam dentro do mesmo Layout (sempre aparece "Início" no topo).
+ * App routes. Home and Matches share the same layout.
  */
 export function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<AppLayout />}>
         <Route index element={<HomePage />} />
-        <Route path="partidas/:id" element={<PartidasPage />} />
+        <Route path="matches/:id" element={<MatchesPage />} />
       </Route>
     </Routes>
   )

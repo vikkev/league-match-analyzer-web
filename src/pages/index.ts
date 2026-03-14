@@ -1,2 +1,2 @@
 export { HomePage } from "./home"
-export { PartidasPage } from "./partidas"
+export { MatchesPage } from "./matches"

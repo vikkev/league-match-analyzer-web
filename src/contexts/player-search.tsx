@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 "use client"
 
 import {
@@ -9,6 +10,7 @@ import {
 } from "react"
 import type { RiotAccount, RiotRegion } from "@/pages/home/types"
 import { getPlayer } from "@/pages/home/services/player.service"
+import { useTranslation } from "@/contexts/i18n"
 
 type PlayerSearchState = {
   gameName: string
@@ -26,6 +28,7 @@ type PlayerSearchState = {
 const PlayerSearchContext = createContext<PlayerSearchState | null>(null)
 
 export function PlayerSearchProvider({ children }: { children: ReactNode }) {
+  const { t } = useTranslation()
   const [gameName, setGameName] = useState("")
   const [tagLine, setTagLine] = useState("")
   const [region, setRegion] = useState<RiotRegion>("americas")
@@ -41,11 +44,11 @@ export function PlayerSearchProvider({ children }: { children: ReactNode }) {
     const name = gameName.trim()
     const tag = tagLine.trim()
     if (!name) {
-      setError("Digite o nome do jogador")
+      setError(t("playerSearch.error.nameRequired"))
       return
     }
     if (!tag) {
-      setError("Digite a tag do jogador (ex: BR1)")
+      setError(t("playerSearch.error.tagRequired"))
       return
     }
 
@@ -54,11 +57,11 @@ export function PlayerSearchProvider({ children }: { children: ReactNode }) {
       const data = await getPlayer(name, tag, region)
       setPlayer(data)
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Erro ao buscar jogador")
+      setError(err instanceof Error ? err.message : t("playerSearch.error.fetch"))
     } finally {
       setLoading(false)
     }
-  }, [gameName, tagLine, region])
+  }, [gameName, tagLine, region, t])
 
   const value: PlayerSearchState = {
     gameName,
