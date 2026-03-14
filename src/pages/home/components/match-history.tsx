@@ -6,6 +6,7 @@ import { MatchHistoryItem } from "./match-history-item"
 import { MatchHistoryLoading } from "./match-history-loading"
 import { MatchHistoryError } from "./match-history-error"
 import { MatchHistoryEmpty } from "./match-history-empty"
+import { toast } from "@/lib/toast"
 
 interface MatchHistoryProps {
   puuid: string
@@ -25,8 +26,11 @@ export function MatchHistory({ puuid, region }: MatchHistoryProps) {
         if (!cancelled) setMatches(data)
       })
       .catch((err) => {
-        if (!cancelled)
-          setError(err instanceof Error ? err.message : t("matchHistory.error"))
+        if (!cancelled) {
+          const msg = err instanceof Error ? err.message : t("matchHistory.error")
+          setError(msg)
+          toast.error(msg)
+        }
       })
       .finally(() => {
         if (!cancelled) setLoading(false)

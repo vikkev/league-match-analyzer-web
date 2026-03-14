@@ -4,6 +4,7 @@ import { useTranslation } from "@/contexts/i18n"
 import type { RiotRegion } from "./types"
 import { getMatchDetail } from "./services/match.service"
 import { MatchDetail } from "./components/match-detail"
+import { toast } from "@/lib/toast"
 
 const DEFAULT_REGION: RiotRegion = "americas"
 
@@ -20,6 +21,7 @@ export function MatchesPage() {
   useEffect(() => {
     if (!matchId) {
       const msg = t("matches.idRequired")
+      toast.error(msg)
       queueMicrotask(() => {
         setLoading(false)
         setError(msg)
@@ -36,8 +38,11 @@ export function MatchesPage() {
         if (!cancelled) setMatch(data)
       })
       .catch((err) => {
-        if (!cancelled)
-          setError(err instanceof Error ? err.message : t("matches.loadError"))
+        if (!cancelled) {
+          const msg = err instanceof Error ? err.message : t("matches.loadError")
+          setError(msg)
+          toast.error(msg)
+        }
       })
       .finally(() => {
         if (!cancelled) setLoading(false)

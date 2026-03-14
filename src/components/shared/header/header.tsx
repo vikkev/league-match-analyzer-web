@@ -12,7 +12,7 @@ import { usePlayerSearch } from "@/contexts/player-search"
 import { useTranslation } from "@/contexts/i18n"
 import { REGIONS } from "@/pages/home/utils/riot-id.utils"
 import type { RiotRegion } from "@/pages/home/types"
-import { Hexagon, Search } from "lucide-react"
+import { ZapIcon } from "lucide-react"
 import { ModeToggle } from "../mode-toggle"
 import { LanguageSelector } from "../language-selector"
 
@@ -25,23 +25,25 @@ export function Header() {
     setTagLine,
     region,
     setRegion,
-    error,
     loading,
     search,
   } = usePlayerSearch()
 
   return (
     <header className="border-b border-border bg-secondary/95 backdrop-blur px-8 py-4">
-      <div className="relative flex h-14 items-center">
+        <div className="relative flex h-16 items-center">
 
         {/* Logo — fixado à esquerda */}
-        <div className="absolute">
+        <div className="absolute left-0">
           <Link
             to="/"
-            className="group flex items-center gap-1.5 text-sm font-semibold tracking-tight text-foreground transition-colors hover:text-primary"
+            className="logo-neon group flex items-center gap-2 text-primary transition-colors dark:text-white dark:hover:opacity-90 hover:opacity-90"
+            aria-label={t("header.home")}
           >
-            <Hexagon className="size-4 shrink-0 text-primary opacity-80 transition-opacity group-hover:opacity-100" />
-            {t("header.home")}
+            <ZapIcon className="size-7 shrink-0 text-primary opacity-90 transition-opacity group-hover:opacity-100 dark:text-white" strokeWidth={3.5} />
+            <span className="logo-neon-text font-display text-[1.75rem] font-bold  leading-none tracking-wider">
+              VOIDPEDIA
+            </span>
           </Link>
         </div>
 
@@ -49,10 +51,9 @@ export function Header() {
         <div className="absolute left-1/2 -translate-x-1/2">
           <form
             onSubmit={search}
-            className="flex h-9 items-center gap-1.5"
+            className="flex h-11 items-center gap-2"
           >
-            <div className="flex h-9 items-center gap-1 rounded-lg border border-border bg-muted/50 px-2 transition-colors focus-within:border-primary/50 focus-within:bg-background">
-              <Search className="w-3.5 shrink-0 text-muted-foreground" />
+            <div className="flex h-full items-center gap-1.5 rounded-lg border border-border bg-muted/50 pl-3 pr-2.5 py-1.5 transition-colors focus-within:border-primary/50 focus-within:bg-background">
               <TextInput
                 type="text"
                 value={gameName}
@@ -60,7 +61,7 @@ export function Header() {
                 placeholder={t("header.search.placeholder.name")}
                 disabled={loading}
                 autoComplete="off"
-                className="h-7 w-28 border-0 bg-transparent p-0 text-sm shadow-none focus-visible:ring-0"
+                className="h-8 w-32 border-0 bg-transparent p-0 text-sm shadow-none focus-visible:ring-0"
               />
               <span className="text-muted-foreground/50">#</span>
               <TextInput
@@ -70,7 +71,7 @@ export function Header() {
                 placeholder={t("header.search.placeholder.tag")}
                 disabled={loading}
                 autoComplete="off"
-                className="h-7 w-16 border-0 bg-transparent p-0 text-sm shadow-none focus-visible:ring-0"
+                className="h-8 w-20 border-0 bg-transparent p-0 text-sm shadow-none focus-visible:ring-0"
               />
             </div>
 
@@ -79,7 +80,7 @@ export function Header() {
               onValueChange={(v) => setRegion(v as RiotRegion)}
               disabled={loading}
             >
-              <SelectTrigger className="h-9! w-24 shrink-0 text-xs">
+              <SelectTrigger className="h-11! w-28 shrink-0 text-sm">
                 <SelectValue placeholder={t("header.search.placeholder.region")} />
               </SelectTrigger>
               <SelectContent>
@@ -91,27 +92,18 @@ export function Header() {
               </SelectContent>
             </SelectInput>
 
-            <Button type="submit" disabled={loading} size="default" className="h-9 shrink-0 px-4 text-xs">
+            <Button type="submit" disabled={loading} size="default" className="btn-display h-full shrink-0 text-sm">
               {loading ? t("header.search.button.loading") : t("header.search.button")}
             </Button>
           </form>
         </div>
 
         {/* Theme + language — right */}
-        <div className="absolute right-4 flex items-center gap-1.5">
+        <div className="absolute right-4 flex items-center gap-2">
           <LanguageSelector />
           <ModeToggle />
         </div>
       </div>
-
-      {error && (
-        <div
-          className="border-t border-destructive/20 bg-destructive/10 px-4 py-2 text-center text-xs text-destructive"
-          role="alert"
-        >
-          {error}
-        </div>
-      )}
     </header>
   )
 }

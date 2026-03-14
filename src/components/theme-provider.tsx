@@ -14,6 +14,7 @@ type ThemeProviderProps = {
 type ThemeProviderState = {
   theme: Theme
   setTheme: (theme: Theme) => void
+  resolvedTheme: ResolvedTheme
 }
 
 const COLOR_SCHEME_QUERY = "(prefers-color-scheme: dark)"
@@ -101,18 +102,24 @@ export function ThemeProvider({
     [storageKey]
   )
 
+  const [resolvedTheme, setResolvedTheme] = React.useState<ResolvedTheme>(
+    () =>
+      (theme === "system" ? getSystemTheme() : theme) as ResolvedTheme
+  )
+
   const applyTheme = React.useCallback(
     (nextTheme: Theme) => {
       const root = document.documentElement
-      const resolvedTheme =
+      const resolved =
         nextTheme === "system" ? getSystemTheme() : nextTheme
+      setResolvedTheme(resolved)
       const restoreTransitions = disableTransitionOnChange
         ? disableTransitionsTemporarily()
         : null
 
       root.classList.remove("light", "dark")
-      root.classList.add(resolvedTheme)
-      root.setAttribute("data-theme", resolvedTheme)
+      root.classList.add(resolved)
+      root.setAttribute("data-theme", resolved)
 
       if (restoreTransitions) {
         restoreTransitions()
@@ -209,8 +216,9 @@ export function ThemeProvider({
     () => ({
       theme,
       setTheme,
+      resolvedTheme,
     }),
-    [theme, setTheme]
+    [theme, setTheme, resolvedTheme]
   )
 
   return (

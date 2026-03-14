@@ -7,27 +7,26 @@ import { useTranslation } from "@/contexts/i18n"
 import { getPlayer } from "../services/player.service"
 import { parseRiotId, REGIONS } from "../utils/riot-id.utils"
 import { MatchHistory } from "./match-history"
+import { toast } from "@/lib/toast"
 
 export function PlayerSearch() {
   const { t } = useTranslation()
   const [riotIdInput, setRiotIdInput] = useState("")
   const [region, setRegion] = useState<RiotRegion>("americas")
   const [player, setPlayer] = useState<RiotAccount | null>(null)
-  const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
   async function handleSearch(e: React.FormEvent) {
     e.preventDefault()
-    setError(null)
     setPlayer(null)
 
     const { gameName, tagLine } = parseRiotId(riotIdInput)
     if (!gameName.trim()) {
-      setError("Digite o Riot ID (ex: Nome#BR1)")
+      toast.error(t("playerSearch.error.nameRequired"))
       return
     }
     if (!tagLine.trim()) {
-      setError("Use o formato Nome#Tag (ex: Player#BR1)")
+      toast.error(t("playerSearch.error.tagRequired"))
       return
     }
 
@@ -36,7 +35,7 @@ export function PlayerSearch() {
       const data = await getPlayer(gameName, tagLine, region)
       setPlayer(data)
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Erro ao buscar jogador")
+      toast.error(err instanceof Error ? err.message : t("playerSearch.error.fetch"))
     } finally {
       setLoading(false)
     }
@@ -80,15 +79,6 @@ export function PlayerSearch() {
           {loading ? "Buscando…" : "Buscar"}
         </Button>
       </form>
-
-      {error && (
-        <div
-          className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2 text-sm text-destructive"
-          role="alert"
-        >
-          {error}
-        </div>
-      )}
 
       {player ? (
         <>

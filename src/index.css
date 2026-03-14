@@ -1,7 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/inter";
+@import "@fontsource-variable/space-grotesk";
+@import "@fontsource/orbitron";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -47,6 +48,13 @@
   --color-defeat-border: rgba(220, 38, 38, 0.25);
   --color-border: rgba(124, 58, 237, 0.15);
   --color-border-hover: rgba(124, 58, 237, 0.35);
+
+  /* Neon glow (light — range curto) */
+  --shadow-neon-sm: 0 0 3px rgba(124, 58, 237, 0.5), 0 0 6px rgba(124, 58, 237, 0.25);
+  --shadow-neon-md: 0 0 4px rgba(124, 58, 237, 0.5), 0 0 8px rgba(124, 58, 237, 0.2);
+  --shadow-neon-toast: 0 0 12px rgba(124, 58, 237, 0.4), 0 0 24px rgba(124, 58, 237, 0.2), 0 0 36px rgba(124, 58, 237, 0.1);
+  --shadow-neon-text: 0 0 4px rgba(124, 58, 237, 0.6), 0 0 8px rgba(124, 58, 237, 0.3);
+  --color-neon-hover: rgba(192, 38, 211, 0.9);
 
   /* Shadcn mapping */
   --background: var(--color-bg-primary);
@@ -111,6 +119,13 @@
   --color-border: rgba(160, 0, 255, 0.15);
   --color-border-hover: rgba(200, 0, 255, 0.3);
 
+  /* Neon glow (dark — range curto, intenso) */
+  --shadow-neon-sm: 0 0 4px rgba(168, 85, 247, 0.6), 0 0 8px rgba(168, 85, 247, 0.3);
+  --shadow-neon-md: 0 0 6px rgba(168, 85, 247, 0.7), 0 0 12px rgba(168, 85, 247, 0.35);
+  --shadow-neon-toast: 0 0 16px rgba(168, 85, 247, 0.5), 0 0 32px rgba(168, 85, 247, 0.25), 0 0 48px rgba(168, 85, 247, 0.15);
+  --shadow-neon-text: 0 0 5px rgba(168, 85, 247, 0.8), 0 0 10px rgba(168, 85, 247, 0.4);
+  --color-neon-hover: rgba(224, 64, 251, 0.95);
+
   --background: var(--color-bg-primary);
   --foreground: var(--color-text-primary);
   --card: var(--color-card-bg);
@@ -143,7 +158,10 @@
    TAILWIND THEME (shadcn + semantic colors)
    ============================================ */
 @theme inline {
-  --font-sans: "Inter Variable", sans-serif;
+  /* UI: texto, botões, labels, inputs, tabelas, cards (~80% do site) */
+  --font-sans: "Space Grotesk Variable", sans-serif;
+  /* Display: títulos, headers, números, destaque */
+  --font-display: "Orbitron", sans-serif;
   --color-victory: var(--color-victory);
   --color-victory-bg: var(--color-victory-bg);
   --color-victory-border: var(--color-victory-border);
@@ -207,6 +225,17 @@
       color var(--transition-theme);
   }
 
+  /* Títulos usam fonte display (Orbitron) por padrão */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+
+  /* Botão com fonte display (Orbitron) + semibold — use a classe .btn-display (cor vem do variant do botão) */
+  .btn-display {
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
   body {
     @apply min-h-full bg-background text-foreground;
     transition:
@@ -233,5 +262,89 @@
       background-color var(--transition-theme),
       border-color var(--transition-theme),
       color var(--transition-theme);
+  }
+
+  /* Neon no logo: light = quase nenhum (legível); dark = glow; hover = magenta */
+  .logo-neon {
+    filter: none;
+    transition: filter var(--transition-base);
+  }
+  .logo-neon:hover {
+    filter: drop-shadow(0 0 2px var(--color-accent));
+  }
+  .dark .logo-neon {
+    filter: drop-shadow(0 0 3px var(--color-accent)) drop-shadow(0 0 6px var(--color-accent));
+  }
+  .dark .logo-neon:hover {
+    filter: drop-shadow(0 0 4px var(--color-neon-hover)) drop-shadow(0 0 8px var(--color-neon-hover));
+  }
+  .logo-neon-text {
+    text-shadow: none;
+    transition: text-shadow var(--transition-base);
+  }
+  .logo-neon:hover .logo-neon-text {
+    text-shadow: 0 0 2px var(--color-accent);
+  }
+  .dark .logo-neon-text {
+    text-shadow: var(--shadow-neon-text);
+  }
+  .dark .logo-neon:hover .logo-neon-text {
+    text-shadow: 0 0 5px var(--color-neon-hover), 0 0 10px var(--color-neon-hover);
+  }
+
+  /* Toast (Sonner) — tema Voidepedia: centro da tela + neon forte */
+  .toaster-voidepedia[data-sonner-toaster] {
+    left: 85% !important;
+    top: 5% !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%) !important;
+  }
+  .toaster-voidepedia [data-sonner-toast] {
+    background: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--foreground) !important;
+    border-radius: var(--radius) !important;
+    box-shadow: var(--shadow-neon-toast) !important;
+  }
+  .toaster-voidepedia [data-sonner-toast][data-type="success"] {
+    border-color: var(--color-victory-border) !important;
+    box-shadow: 0 0 16px rgba(34, 197, 94, 0.35), 0 0 32px rgba(34, 197, 94, 0.2), 0 0 48px rgba(34, 197, 94, 0.1) !important;
+  }
+  .toaster-voidepedia [data-sonner-toast][data-type="error"] {
+    border-color: var(--color-defeat-border) !important;
+    box-shadow: 0 0 16px rgba(239, 68, 68, 0.35), 0 0 32px rgba(239, 68, 68, 0.2), 0 0 48px rgba(239, 68, 68, 0.1) !important;
+  }
+  .toaster-voidepedia .toast-title-voidepedia {
+    color: var(--foreground) !important;
+    font-weight: 600;
+  }
+  .toaster-voidepedia .toast-description-voidepedia {
+    color: var(--muted-foreground) !important;
+  }
+  .toaster-voidepedia .toast-action-voidepedia,
+  .toaster-voidepedia [data-sonner-toast] [data-button][data-action] {
+    background: var(--primary) !important;
+    color: var(--primary-foreground) !important;
+    border-radius: var(--radius-md) !important;
+    font-weight: 600;
+  }
+  .toaster-voidepedia .toast-close-voidepedia {
+    background: var(--muted) !important;
+    border: none !important;
+    color: var(--muted-foreground) !important;
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+    border-radius: var(--radius) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 0.9;
+    transition: opacity 0.15s, background 0.15s, color 0.15s;
+  }
+  .toaster-voidepedia .toast-close-voidepedia:hover {
+    opacity: 1;
+    background: var(--border) !important;
+    color: var(--foreground) !important;
   }
 }

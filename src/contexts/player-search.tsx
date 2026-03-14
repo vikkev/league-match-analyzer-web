@@ -11,6 +11,7 @@ import {
 import type { RiotAccount, RiotRegion } from "@/pages/home/types"
 import { getPlayer } from "@/pages/home/services/player.service"
 import { useTranslation } from "@/contexts/i18n"
+import { toast } from "@/lib/toast"
 
 type PlayerSearchState = {
   gameName: string
@@ -44,11 +45,11 @@ export function PlayerSearchProvider({ children }: { children: ReactNode }) {
     const name = gameName.trim()
     const tag = tagLine.trim()
     if (!name) {
-      setError(t("playerSearch.error.nameRequired"))
+      toast.error(t("playerSearch.error.nameRequired"))
       return
     }
     if (!tag) {
-      setError(t("playerSearch.error.tagRequired"))
+      toast.error(t("playerSearch.error.tagRequired"))
       return
     }
 
@@ -57,7 +58,7 @@ export function PlayerSearchProvider({ children }: { children: ReactNode }) {
       const data = await getPlayer(name, tag, region)
       setPlayer(data)
     } catch (err) {
-      setError(err instanceof Error ? err.message : t("playerSearch.error.fetch"))
+      toast.error(err instanceof Error ? err.message : t("playerSearch.error.fetch"))
     } finally {
       setLoading(false)
     }

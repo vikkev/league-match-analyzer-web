@@ -17,8 +17,8 @@ export function LanguageSelector() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon" title={t("locale.label")}>
-          <Languages className="h-[1.2rem] w-[1.2rem]" />
+        <Button variant="outline" size="icon" className="size-10" title={t("locale.label")}>
+          <Languages className="size-5 shrink-0" />
           <span className="sr-only">{t("locale.label")}</span>
         </Button>
       </DropdownMenuTrigger>
