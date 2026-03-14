@@ -15,6 +15,9 @@ export const ja = {
   "locale.label": "言語",
   "home.empty":
     "ヘッダーの検索でRiot IDからプレイヤーを検索できます。",
+  "home.savedPlayer.title": "保存したプレイヤー",
+  "home.savedPlayer.empty":
+    "保存したプレイヤーはいません。ヘッダーでプレイヤーを検索すると保存され、ここにマッチ履歴が表示されます。",
   "matchHistory.title": "マッチ履歴",
   "matchHistory.loading": "履歴を読み込み中…",
   "matchHistory.empty": "最近のマッチが見つかりません。",
@@ -34,4 +37,16 @@ export const ja = {
   "region.asia": "アジア",
   "match.result.victory": "勝利",
   "match.result.defeat": "敗北",
+  "match.badge.trollMaster": "Troll Master",
+  "match.badge.trollMaster.tooltip": "死亡数が多く貢献が少ない — 敗因の可能性大",
+  "match.badge.carried": "おんぶ",
+  "match.badge.carried.tooltip": "チームダメージ寄与が極端に低いまま勝利",
+  "match.badge.oneManArmy": "一人軍団",
+  "match.badge.oneManArmy.tooltip": "ダメージ・キル参加率が高い",
+  "match.badge.firstBlood": "ファーストブラッド",
+  "match.badge.firstBlood.tooltip": "ファーストブラッド取得",
+  "match.badge.foreverDead": "永遠のデッド",
+  "match.badge.foreverDead.tooltip": "5分以上デッドタイム",
+  "match.badge.supportKing": "サポートの王",
+  "match.badge.supportKing.tooltip": "30アシスト以上で勝利",
 } as const

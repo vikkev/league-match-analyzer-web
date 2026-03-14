@@ -15,6 +15,9 @@ export const ptBR = {
   "locale.label": "Idioma",
   "home.empty":
     "Use a busca no cabeçalho para procurar um jogador pelo Riot ID.",
+  "home.savedPlayer.title": "Jogador salvo",
+  "home.savedPlayer.empty":
+    "Nenhum jogador salvo. Use a busca no cabeçalho para buscar um jogador; ele será salvo e as partidas aparecerão aqui.",
   "matchHistory.title": "Histórico de partidas",
   "matchHistory.loading": "Carregando histórico…",
   "matchHistory.empty": "Nenhuma partida recente encontrada.",
@@ -34,4 +37,16 @@ export const ptBR = {
   "region.asia": "Ásia",
   "match.result.victory": "Vitória",
   "match.result.defeat": "Derrota",
+  "match.badge.trollMaster": "Troll Master",
+  "match.badge.trollMaster.tooltip": "Muitas mortes, pouca contribuição — provável causa da derrota",
+  "match.badge.carried": "Carregado",
+  "match.badge.carried.tooltip": "Venceu com participação de dano bem baixa",
+  "match.badge.oneManArmy": "Um Contra Todos",
+  "match.badge.oneManArmy.tooltip": "Alta participação de dano e de abates",
+  "match.badge.firstBlood": "Sangue Frio",
+  "match.badge.firstBlood.tooltip": "Primeiro sangue",
+  "match.badge.foreverDead": "Eternamente Morto",
+  "match.badge.foreverDead.tooltip": "Ficou 5+ minutos morto",
+  "match.badge.supportKing": "Rei do Suporte",
+  "match.badge.supportKing.tooltip": "30+ assistências e a vitória",
 } as const

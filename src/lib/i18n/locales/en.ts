@@ -15,6 +15,9 @@ export const en = {
   "locale.label": "Language",
   "home.empty":
     "Use the search in the header to look up a player by Riot ID.",
+  "home.savedPlayer.title": "Saved player",
+  "home.savedPlayer.empty":
+    "No saved player. Use the search in the header to look up a player; they will be saved and their matches will show here.",
   "matchHistory.title": "Match history",
   "matchHistory.loading": "Loading history…",
   "matchHistory.empty": "No recent matches found.",
@@ -34,4 +37,16 @@ export const en = {
   "region.asia": "Asia",
   "match.result.victory": "Victory",
   "match.result.defeat": "Defeat",
+  "match.badge.trollMaster": "Troll Master",
+  "match.badge.trollMaster.tooltip": "High deaths, low impact — likely cost the game",
+  "match.badge.carried": "Carried",
+  "match.badge.carried.tooltip": "Won with very low team damage share",
+  "match.badge.oneManArmy": "One Man Army",
+  "match.badge.oneManArmy.tooltip": "High damage share and kill participation",
+  "match.badge.firstBlood": "First Blood",
+  "match.badge.firstBlood.tooltip": "Got first blood",
+  "match.badge.foreverDead": "Forever Dead",
+  "match.badge.foreverDead.tooltip": "Spent 5+ minutes dead",
+  "match.badge.supportKing": "Support King",
+  "match.badge.supportKing.tooltip": "30+ assists and the W",
 } as const

@@ -230,10 +230,10 @@
     @apply font-display;
   }
 
-  /* Botão com fonte display (Orbitron) + semibold — use a classe .btn-display (cor vem do variant do botão) */
+  /* Botão com fonte display (Orbitron) + negrito + texto claro do tema */
   .btn-display {
-    font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 700;
+    color: var(--primary-foreground);
   }
 
   body {

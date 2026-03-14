@@ -13,6 +13,7 @@ export function MatchesPage() {
   const { id: matchId } = useParams<{ id: string }>()
   const [searchParams] = useSearchParams()
   const region = (searchParams.get("region") as RiotRegion) || DEFAULT_REGION
+  const viewedPlayerPuuid = searchParams.get("puuid") ?? undefined
 
   const [match, setMatch] = useState<Awaited<ReturnType<typeof getMatchDetail>> | null>(null)
   const [loading, setLoading] = useState(true)
@@ -75,7 +76,7 @@ export function MatchesPage() {
 
   return (
     <div className="flex flex-col gap-6 p-6">
-      <MatchDetail match={match} />
+      <MatchDetail match={match} viewedPlayerPuuid={viewedPlayerPuuid} />
     </div>
   )
 }

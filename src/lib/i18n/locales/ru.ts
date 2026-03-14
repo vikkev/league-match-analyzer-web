@@ -15,6 +15,9 @@ export const ru = {
   "locale.label": "Язык",
   "home.empty":
     "Введите Riot ID в поиске выше, чтобы найти игрока.",
+  "home.savedPlayer.title": "Сохранённый игрок",
+  "home.savedPlayer.empty":
+    "Нет сохранённого игрока. Введите Riot ID в поиске в шапке — он сохранится и здесь появятся его матчи.",
   "matchHistory.title": "История матчей",
   "matchHistory.loading": "Загрузка истории…",
   "matchHistory.empty": "Недавних матчей не найдено.",
@@ -34,4 +37,16 @@ export const ru = {
   "region.asia": "Азия",
   "match.result.victory": "Победа",
   "match.result.defeat": "Поражение",
+  "match.badge.trollMaster": "Troll Master",
+  "match.badge.trollMaster.tooltip": "Много смертей, малая польза — вероятная причина поражения",
+  "match.badge.carried": "На руках",
+  "match.badge.carried.tooltip": "Победа при очень малой доле урона команды",
+  "match.badge.oneManArmy": "Один против всех",
+  "match.badge.oneManArmy.tooltip": "Высокая доля урона и участие в убийствах",
+  "match.badge.firstBlood": "Первая кровь",
+  "match.badge.firstBlood.tooltip": "Забрал первую кровь",
+  "match.badge.foreverDead": "Вечно мёртв",
+  "match.badge.foreverDead.tooltip": "5+ минут провёл мёртвым",
+  "match.badge.supportKing": "Король саппорта",
+  "match.badge.supportKing.tooltip": "30+ ассистов и победа",
 } as const
